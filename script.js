@@ -338,7 +338,4 @@ riddleInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Show first riddle on load
-setTimeout(() => {
-    showRiddle();
-}, 500);
+// Don't auto-show riddle - let user click the button to start
