@@ -1,0 +1,256 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px 30px;
+    animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header h1 {
+    text-align: center;
+    color: #764ba2;
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.content {
+    margin: 40px 0;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reason-container {
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.emoji {
+    font-size: 4em;
+    margin-bottom: 20px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.reason-text {
+    font-size: 1.3em;
+    color: #333;
+    line-height: 1.6;
+    padding: 0 10px;
+}
+
+.button-container {
+    text-align: center;
+    margin: 30px 0 20px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.counter {
+    color: #764ba2;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.hearts-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(45deg);
+    animation: float 6s ease-in-out infinite;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: -10px;
+}
+
+.heart:nth-child(1) {
+    left: 10%;
+    top: 20%;
+    animation-delay: 0s;
+}
+
+.heart:nth-child(2) {
+    left: 80%;
+    top: 30%;
+    animation-delay: 1s;
+}
+
+.heart:nth-child(3) {
+    left: 30%;
+    top: 70%;
+    animation-delay: 2s;
+}
+
+.heart:nth-child(4) {
+    left: 70%;
+    top: 80%;
+    animation-delay: 3s;
+}
+
+.heart:nth-child(5) {
+    left: 50%;
+    top: 50%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: rotate(45deg) translateY(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: rotate(45deg) translateY(-20px);
+        opacity: 0.6;
+    }
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+    .card {
+        padding: 30px 20px;
+        border-radius: 25px;
+    }
+    
+    .header h1 {
+        font-size: 1.5em;
+    }
+    
+    .emoji {
+        font-size: 3em;
+    }
+    
+    .reason-text {
+        font-size: 1.1em;
+    }
+    
+    .btn {
+        padding: 15px 35px;
+        font-size: 1.1em;
+    }
+}
+
+/* Add touch feedback for mobile */
+@media (hover: none) {
+    .btn:active {
+        transform: scale(0.95);
+    }
+}
