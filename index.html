@@ -19,12 +19,39 @@
                     <p class="reason-text" id="reasonText">
                         Tap the button to see why you're amazing!
                     </p>
+                    
+                    <!-- Riddle input container (hidden by default) -->
+                    <div id="riddleContainer" style="display: none;">
+                        <input 
+                            type="text" 
+                            id="riddleInput" 
+                            class="riddle-input" 
+                            placeholder="Type your answer..."
+                            autocomplete="off"
+                        />
+                        <div class="riddle-buttons">
+                            <button id="submitAnswer" class="btn-submit">
+                                Submit Answer
+                            </button>
+                            <button id="clueBtn" class="btn-clue">
+                                💡 Need a Clue?
+                            </button>
+                        </div>
+                        <p id="clueText" class="clue-text"></p>
+                        <p id="feedbackText" class="feedback-text"></p>
+                    </div>
+                    
+                    <!-- Reason display (shown after correct answer) -->
+                    <div id="reasonDisplay" style="display: block;"></div>
                 </div>
             </div>
             
             <div class="button-container">
                 <button id="newReasonBtn" class="btn">
                     Show Me Love 💖
+                </button>
+                <button id="sassyBtn" class="btn-sassy" style="display: none;">
+                    😏 Sass It Up!
                 </button>
             </div>
             
