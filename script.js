@@ -43,8 +43,8 @@ const reasons = [
     },
     { 
         emoji: "🌈", 
-        text: "You bring color and temperament into my life",
-        sassyText: "...and by color, I mean needs, wants and opinions different from my own.<br>...and by temperament I mean (rightous) chaos when I fail to appreciate the color",
+        text: "You bring color into my life",
+        sassyText: "...color also refers to temperament. Not your tan, which I can clearly outdo!",
         riddle: "I appear after storms pass by. What am I?",
         clue: "I arch across the sky with seven colors so high",
         answer: "rainbow"
@@ -52,7 +52,7 @@ const reasons = [
     { 
         emoji: "☀️", 
         text: "You're my sunshine on cloudy days",
-        sassyText: "...which is great because we literally don't get that manny sunny days!",
+        sassyText: "...which is great because we literally don't get that many sunny days!",
         riddle: "I give warmth and light to all I see. What am I?",
         clue: "I rise in the morning and set at night",
         answer: "sun"
@@ -75,7 +75,7 @@ const reasons = [
     },
     { 
         emoji: "🌸", 
-        text: "Although you are introverted, I think your kindness towards everyone in your life is beautiful",
+        text: "Your kindness towards everyone in your life is beautiful, my lovely introvert",
         sassyText: "...even people who sometimes chew loudly and/or smell bad. Phew, I am lucky!",
         riddle: "I bloom in gardens and smell divine. What am I?",
         clue: "I bloom in spring and I'm pretty and sweet",
@@ -93,8 +93,8 @@ const reasons = [
     // },
 ];
 
-let counter = 0;
-let usedReasons = [];
+let solvedReasons = []; // Track solved reasons in order
+let currentIndex = -1; // Current position in solved reasons
 let currentReason = null;
 let riddleMode = false;
 let clueShown = false;
@@ -113,31 +113,47 @@ const feedbackText = document.getElementById('feedbackText');
 const clueBtn = document.getElementById('clueBtn');
 const clueText = document.getElementById('clueText');
 const sassyBtn = document.getElementById('sassyBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const newRiddleBtn = document.getElementById('newRiddleBtn');
 
-// Function to get a random reason
-function getRandomReason() {
-    // If all reasons have been shown, reset
-    if (usedReasons.length === reasons.length) {
-        usedReasons = [];
+// Function to get a random unsolved reason
+function getRandomUnsolvedReason() {
+    const solvedIndices = solvedReasons.map(r => reasons.indexOf(r));
+    const unsolvedReasons = reasons.filter((_, index) => !solvedIndices.includes(index));
+    
+    if (unsolvedReasons.length === 0) {
+        return null; // All solved
     }
     
-    // Get unused reasons
-    const availableReasons = reasons.filter((_, index) => !usedReasons.includes(index));
+    const randomIndex = Math.floor(Math.random() * unsolvedReasons.length);
+    return unsolvedReasons[randomIndex];
+}
+
+// Function to update navigation buttons
+function updateNavigationButtons() {
+    if (solvedReasons.length === 0) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        newRiddleBtn.style.display = 'none';
+        return;
+    }
     
-    // Select random reason from available
-    const randomIndex = Math.floor(Math.random() * availableReasons.length);
-    const selectedReason = availableReasons[randomIndex];
-    
-    // Mark this reason as used
-    const originalIndex = reasons.indexOf(selectedReason);
-    usedReasons.push(originalIndex);
-    
-    return selectedReason;
+    prevBtn.style.display = currentIndex > 0 ? 'inline-block' : 'none';
+    nextBtn.style.display = currentIndex < solvedReasons.length - 1 ? 'inline-block' : 'none';
+    newRiddleBtn.style.display = solvedReasons.length < reasons.length ? 'inline-block' : 'none';
 }
 
 // Function to show riddle
 function showRiddle() {
-    currentReason = getRandomReason();
+    const unsolvedReason = getRandomUnsolvedReason();
+    
+    if (!unsolvedReason) {
+        alert('The Sphinx of Love is out of riddles for now, but he\'ll be sure to have more later!');
+        return;
+    }
+    
+    currentReason = unsolvedReason;
     riddleMode = true;
     clueShown = false;
     
@@ -166,6 +182,9 @@ function showRiddle() {
     // Hide buttons
     newReasonBtn.style.display = 'none';
     sassyBtn.style.display = 'none';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    newRiddleBtn.style.display = 'none';
     riddleInput.focus();
 }
 
@@ -211,6 +230,12 @@ function showUnlockedReason() {
     riddleMode = false;
     sassyShown = false;
     
+    // Add to solved reasons if not already there
+    if (!solvedReasons.includes(currentReason)) {
+        solvedReasons.push(currentReason);
+        currentIndex = solvedReasons.length - 1;
+    }
+    
     // Animate transition
     const reasonContainer = document.querySelector('.reason-container');
     reasonContainer.style.animation = 'none';
@@ -222,27 +247,65 @@ function showUnlockedReason() {
     reasonDisplay.style.display = 'block';
     
     // Update content
-    emojiElement.textContent = currentReason.emoji;
-    reasonText.textContent = currentReason.text;
+    displayCurrentReason();
     
     // Update counter
-    counter++;
-    counterElement.textContent = counter;
+    counterElement.textContent = `${currentIndex + 1} of ${solvedReasons.length}`;
     
     // Show buttons
-    newReasonBtn.style.display = 'block';
+    newReasonBtn.style.display = 'none'; // Hide the old "Show Me Love" button
     sassyBtn.style.display = 'inline-block';
-    
-    newReasonBtn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        newReasonBtn.style.transform = 'scale(1)';
-    }, 100);
+    updateNavigationButtons();
+}
+
+// Function to display the current reason
+function displayCurrentReason() {
+    if (currentIndex >= 0 && currentIndex < solvedReasons.length) {
+        const reason = solvedReasons[currentIndex];
+        emojiElement.textContent = reason.emoji;
+        reasonText.textContent = reason.text;
+        sassyShown = false;
+        sassyBtn.style.display = 'inline-block';
+    }
+}
+
+// Function to go to previous reason
+function goToPrevious() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        displayCurrentReason();
+        counterElement.textContent = `${currentIndex + 1} of ${solvedReasons.length}`;
+        updateNavigationButtons();
+        
+        // Animate
+        const reasonContainer = document.querySelector('.reason-container');
+        reasonContainer.style.animation = 'none';
+        void reasonContainer.offsetWidth;
+        reasonContainer.style.animation = 'fadeIn 0.5s ease-in';
+    }
+}
+
+// Function to go to next reason
+function goToNext() {
+    if (currentIndex < solvedReasons.length - 1) {
+        currentIndex++;
+        displayCurrentReason();
+        counterElement.textContent = `${currentIndex + 1} of ${solvedReasons.length}`;
+        updateNavigationButtons();
+        
+        // Animate
+        const reasonContainer = document.querySelector('.reason-container');
+        reasonContainer.style.animation = 'none';
+        void reasonContainer.offsetWidth;
+        reasonContainer.style.animation = 'fadeIn 0.5s ease-in';
+    }
 }
 
 // Function to show sassy addition
 function showSassyText() {
-    if (!sassyShown && currentReason && currentReason.sassyText) {
-        reasonText.innerHTML = currentReason.text + ' ' + currentReason.sassyText;
+    const reason = solvedReasons[currentIndex];
+    if (!sassyShown && reason && reason.sassyText) {
+        reasonText.innerHTML = reason.text + ' ' + reason.sassyText;
         sassyBtn.style.display = 'none';
         sassyShown = true;
         
@@ -262,6 +325,12 @@ submitAnswerBtn.addEventListener('click', checkAnswer);
 clueBtn.addEventListener('click', showClue);
 
 sassyBtn.addEventListener('click', showSassyText);
+
+prevBtn.addEventListener('click', goToPrevious);
+
+nextBtn.addEventListener('click', goToNext);
+
+newRiddleBtn.addEventListener('click', showRiddle);
 
 riddleInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
