@@ -37,7 +37,7 @@ const reasons = [
         emoji: "✨", 
         text: "You inspire me to be a better person every day",
         sassyText: "...although it might seem like I'm slow about it!",
-        riddle: "I'm magical and bright, I add delight. What am I?",
+        riddle: "I'm what diamonds do, and what eyes can too when filled with joy. What am I?",
         clue: "I shimmer and shine in the light",
         answer: "sparkle"
     },
@@ -81,16 +81,46 @@ const reasons = [
         clue: "I bloom in spring and I'm pretty and sweet",
         answer: "flower"
     },
-    // Add more reasons here with personal riddles and messages!
-    // Example format:
-    // { 
-    //     emoji: "💕", 
-    //     text: "Your custom message here",
-    //     sassyText: "...but also something playfully teasing!",
-    //     riddle: "Your custom riddle here?",
-    //     clue: "A helpful hint if they're stuck",
-    //     answer: "answer" (case insensitive)
-    // },
+    { 
+        emoji: "🎵", 
+        text: "I love it when you vibe with music",
+        sassyText: "...even the worn-out fantasy-medieval-tavern playlist!",
+        riddle: "I have keys but no locks, space but no room. What am I?",
+        clue: "You can play me with your fingers",
+        answer: "piano"
+    },
+    { 
+        emoji: "☕", 
+        text: "Your energy is contagious",
+        sassyText: "...though the old man in me enjoys the rest when you are tuckered out!",
+        riddle: "I'm a bean that can't grow in a garden. What am I?",
+        clue: "I wake people up every morning",
+        answer: "coffee"
+    },
+    { 
+        emoji: "📚", 
+        text: "I love that you are intelligent and systematic",
+        sassyText: "...although it makes you a scary opponent in those little couple-fights about everyday things!",
+        riddle: "I have a spine but no bones. You can lose yourself in me for hours. What am I?",
+        clue: "I have pages but I'm not a servant.",
+        answer: "book"
+    },
+    { 
+        emoji: "👣", 
+        text: "You make me feel safe and at peace anywhere I am with you",
+        sassyText: "...but that's not to say that we should travel even more!",
+        riddle: "The more you take of me, the more you leave behind. What am I?",
+        clue: "You take them everywhere you go",
+        answer: "steps"
+    },
+    { 
+        emoji: "🎨", 
+        text: "Your creativity and skill with crafts amaze me",
+        sassyText: "...though we may want to save up for a second house for your creations!",
+        riddle: "I can be cracked, made, told, and played. What am I?",
+        clue: "I can make you laugh or groan",
+        answer: "joke"
+    },
 ];
 
 let solvedReasons = []; // Track solved reasons in order
